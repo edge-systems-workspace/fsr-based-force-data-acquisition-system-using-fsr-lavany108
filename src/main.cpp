@@ -1,44 +1,33 @@
-#include <Arduino.h>
 /**
- * @file main.ino
- * @brief Embedded Force Measurement System using FSR
- * @author YOUR_NAME
- * @date YYYY-MM-DD
+* @file main.cpp
+ * @brief Simple Arduino sketch to read an analog force/pressure sensor and print raw ADC values.
  *
  * @details
- * Reads analog force data from FSR sensor and
- * displays structured output via Serial Monitor.
+ * This minimal example reads the analog input connected to the sensor (A0) and prints the
+ * 10-bit ADC value (0-1023) to the serial console at 9600 baud every SAMPLE_MS milliseconds.
+ * It's intended as a starting point for force/pressure sensors; convert the ADC reading to
+ * engineering units using a calibration curve for your specific sensor.
+ *
+ * @author Lavanya
+ * @date 2026-02-28
+ * @version 0.1
  */
-
- // TODO 1:
- // Define FSR analog pin (Use A0)
-
- // TODO 2:
- // Create variable to store sensor reading
-
+#include <Arduino.h>
+const uint8_t SENSOR_PIN = A0;
+const unsigned long SAMPLE_MS = 500UL;
+int value = 0;
 void setup() {
-
-    // TODO 3:
-    // Initialize Serial communication (9600 baud rate)
-
-    // TODO 4:
-    // Print system initialization message
+    // Initialize serial for debugging/monitoring
+    Serial.begin(9600);
+    // Configure the sensor pin as input (analog pins on most boards are inputs by default,
+    // but calling pinMode keeps the intent explicit).
+    pinMode(SENSOR_PIN, INPUT);
 }
-
 void loop() {
+    // Read the sensor and output the raw ADC value
+    value = analogRead(SENSOR_PIN);
+    Serial.println(value);
 
-    // TODO 5:
-    // Read analog value from FSR
-
-    // TODO 6:
-    // Print raw ADC value
-
-    // TODO 7:
-    // Apply simple threshold logic (e.g., detect pressure)
-
-    // TODO 8:
-    // Print pressure detection message
-
-    // TODO 9:
-    // Add delay (500ms or 1 second)
+    // Simple blocking delay between samples
+    delay(SAMPLE_MS);
 }
